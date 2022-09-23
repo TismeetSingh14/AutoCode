@@ -92,7 +92,7 @@ class Dataset:
             line = line.replace(",",", ").replace("\n"," \n")
             tokens = line.split(" ")
             for token in tokens:
-                self.voc.append(token)
+                self.voc.addToken(token)
                 token_sequence.append(token)
 
         token_sequence.append(END_TOKEN)
