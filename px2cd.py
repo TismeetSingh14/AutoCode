@@ -5,6 +5,7 @@ from keras.models import *
 from Config import *
 from keras import *
 from keras.optimizers import *
+from keras.optimizers import Adam
 from AModel import *
 
 class AutoCode():
