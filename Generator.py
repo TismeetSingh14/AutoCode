@@ -69,4 +69,3 @@ class Generator:
                         batch_input_images = []
                         batch_partial_sequences = []
                         batch_next_words = []
-                        sample_in_batch_counter = 0
