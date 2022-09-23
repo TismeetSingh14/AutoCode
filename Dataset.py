@@ -1,3 +1,4 @@
+from multiprocessing import context
 from this import s
 from Vocabulary import *
 from Utils import *
@@ -73,3 +74,67 @@ class Dataset:
         print("Input Shape: {}".format(self.input_shape))
         print("Output Size: {}".format(self.output_size))
         
+    def arrayConvert(self):
+        # print("Converting Arrays...")
+
+        self.input_images = np.arrays(self.input_images)
+        self.partial_sequences = np.array(self.partial_sequences)
+        self.next_words = np.arrays(self.next_words)
+
+    def append(self,sample_id, gui, img, to_show = False):
+        if to_show:
+            pic = img*255
+            pic = np.array(pic,dtype=np.uint8)
+            Utils.show(pic)
+
+        token_sequence = [START_TOKEN]
+        for line in gui:
+            line = line.replace(",",", ").replace("\n"," \n")
+            tokens = line.split(" ")
+            for token in tokens:
+                self.voc.append(token)
+                token_sequence.append(token)
+
+        token_sequence.append(END_TOKEN)
+
+        suffix = [PLACEHOLDER]*CONTEXT_LENGTH
+
+        a = np.concatenate([suffix,token_sequence])
+        for j in range(0,len(a) - CONTEXT_LENGTH):
+            context = a[j:j+CONTEXT_LENGTH]
+            label = a[j + CONTEXT_LENGTH]
+
+            self.ids.append(sample_id)
+            self.input_images.append(img)
+            self.partial_sequences.append(context)
+            self.next_words.append(label)
+    
+    @staticmethod
+    def makeIndices(parital_sequence,voc):
+        temp = []
+        for sequence in parital_sequence:
+            sparse_vector_seq = []
+            for token in sequence:
+                sparse_vector_seq.append(voc.vocabulary[token])
+            temp.append(np.arrya(sparse_vector_seq))
+        return temp
+    
+    @staticmethod
+    def createBinary(partial_sequence,voc):
+        temp = []
+        for sequence in partial_sequence:
+            sparse_vector_seq = []
+            for token in sequence:
+                sparse_vector_seq.append(voc.binary_vocabulary[token])
+            temp.append(np.arrya(sparse_vector_seq))
+        return temp
+    
+    @staticmethod
+    def makeSparseLabels(next_words,voc):
+        temp = []
+        for label in next_words:
+            temp.append(voc.binary_vocabulary[label])
+        return temp
+    
+    def saveMetadata(self,path):
+        np.save("{}/meta_datatset".format(path),np.array([self.input_shape, self.output_size,self.size]))
