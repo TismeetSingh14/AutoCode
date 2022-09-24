@@ -15,23 +15,17 @@ class AutoCode():
     
         model_i = Sequential()
         model_i.add(Conv2D(32, (3,3), padding = "valid", activation="relu", input_shape = input_shape))
-        model_i.add(LeakyReLU(alpha=0.1))
         model_i.add(Conv2D(32, (3,3), padding = "valid", activation="relu"))
-        model_i.add(LeakyReLU(alpha=0.1))
         model_i.add(MaxPooling2D(pool_size = (2,2)))
         model_i.add(Dropout(0.3))
 
         model_i.add(Conv2D(64, (3,3), padding = "valid", activation="relu"))
-        model_i.add(LeakyReLU(alpha=0.1))
         model_i.add(Conv2D(64, (3,3), padding = "valid", activation="relu"))
-        model_i.add(LeakyReLU(alpha=0.1))
         model_i.add(MaxPooling2D(pool_size = (2,2)))
         model_i.add(Dropout(0.25))
 
         model_i.add(Conv2D(128, (3,3), padding = "valid", activation="relu"))
-        model_i.add(LeakyReLU(alpha=0.1))
         model_i.add(Conv2D(128, (3,3), padding = "valid", activation="relu"))
-        model_i.add(LeakyReLU(alpha=0.1))
         model_i.add(MaxPooling2D(pool_size = (2,2)))
         model_i.add(Dropout(0.3))
 
@@ -57,7 +51,7 @@ class AutoCode():
         decoder = concatenate([img_enc, txt_enc])
 
         decoder = LSTM(512, return_sequences=True)(decoder)
-        decoder = LSTM(512, return_sequences=True)(decoder)
+        decoder = LSTM(512, return_sequences=False)(decoder)
         decoder = Dense(output_size, activation = "softmax")(decoder)
 
         self.model = Model(inputs = [img_inp, txt_inp], outputs = decoder)
