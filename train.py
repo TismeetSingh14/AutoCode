@@ -5,7 +5,7 @@ import sys
 from Generator import *
 from px2cd import *
 
-def run(input_path, output_path, memory_intensive, pretrained_model):
+def run(input_path, output_path, memory_intensive = False, pretrained_model = None):
     np.random.seed(11)
     
     dataset = Dataset()
@@ -31,7 +31,7 @@ def run(input_path, output_path, memory_intensive, pretrained_model):
 
         voc = Vocabulary()
         voc.dataRead(output_path)
-        generator = Generator.data_generator(voc,gui_paths,img_paths,BATCH_SIZE,True)
+        generator = Generator.data_generator(voc,gui_paths,img_paths,batch_size = BATCH_SIZE,generate_binary_sequences = True)
     
     model = AutoCode(input_shape,output_size,output_path)
 
@@ -42,7 +42,7 @@ def run(input_path, output_path, memory_intensive, pretrained_model):
         model.fit(dataset.input_images,dataset.partial_sequences,dataset.next_words)
     
     else:
-        model.fit_generator(generator,steps_per_epoch)
+        model.fit_generator(generator,steps_per_epoch = steps_per_epoch)
 
 
 if __name__  == "__main__":
