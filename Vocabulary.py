@@ -53,7 +53,7 @@ class Vocabulary:
         input_file = "{}/words.vocab".format(path)
         file = open(input_file, 'r')
         buffer = ""
-        for line in input_file:
+        for line in file:
             try:
                 separator_position = len(buffer) + line.index(SEPARATOR)
                 buffer += line

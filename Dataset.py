@@ -129,10 +129,8 @@ class Dataset:
     
     @staticmethod
     def makeSparseLabels(next_words,voc):
-        print("hello")
         temp = []
         for label in next_words:
-            # print(label)
             temp.append(voc.binary_vocabulary[label])
         return temp
     
