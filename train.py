@@ -1,6 +1,6 @@
 import tensorflow as tf
 import sys
-session = tf.Session(config=tf.ConfigProto(log_device_placement=True))
+# session = tf.Session(config=tf.ConfigProto(log_device_placement=True))
 
 from Generator import *
 from px2cd import *
@@ -9,7 +9,7 @@ def run(input_path, output_path, memory_intensive, pretrained_model):
     np.random.seed(11)
     
     dataset = Dataset()
-    dataset.load(input_path, True)
+    dataset.loadData(input_path, True)
     dataset.saveMetadata(output_path)
     dataset.voc.save(output_path)
 

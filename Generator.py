@@ -29,7 +29,7 @@ class Generator:
                     tokens = line.split(" ")
 
                     for token in tokens:
-                        voc.append(token)
+                        voc.addToken(token)
                         token_sequence.append(token)
                 token_sequence.append(END_TOKEN)
 

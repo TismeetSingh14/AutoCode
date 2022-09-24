@@ -35,13 +35,13 @@ class Vocabulary:
         if len(self.binary_vocabulary) == 0:
             self.binaryConvert()
         
-        string = ""
+        mystr = ""
         items = self.binary_vocabulary.items()
         for key, value in items:
             strarr = np.array2string(value, separator=',', max_line_width = self.size*self.size)
-            str += "{}{}{}\n".format(key, SEPARATOR, strarr[1:len(strarr) - 1])
+            mystr += "{}{}{}\n".format(key, SEPARATOR, strarr[1:len(strarr) - 1])
     
-        return str
+        return mystr
 
     def save(self, path):
         output_file = "{}/words.vocab".format(path)

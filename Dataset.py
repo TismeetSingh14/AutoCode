@@ -1,5 +1,4 @@
 from multiprocessing import context
-from this import s
 from Vocabulary import *
 from Utils import *
 from Config import *
@@ -42,7 +41,7 @@ class Dataset:
     
     def loadData(self, path, isBinSeq = False):
         for f in os.listdir(path):
-            if f.find(".gui" != -1):
+            if f.find(".gui") != -1:
                 gui = open("{}/{}".format(path, f), 'r')
                 filename = f[:f.find(".gui")]
 
@@ -55,11 +54,11 @@ class Dataset:
                     self.append(filename, gui, arr)
         
         self.voc.serializeBinaryConvert()
-        self.next_words = self.oneHotEncoding(self.next_words, self.voc)
+        self.next_words = self.makeSparseLabels(self.next_words, self.voc)
         if isBinSeq:
-            self.partial_sequences = self.binarize(self.partial_sequences, self.voc)
+            self.partial_sequences = self.createBinary(self.partial_sequences, self.voc)
         else :
-            self.partial_sequences = self.indexify(self.partial_sequences, self.voc)
+            self.partial_sequences = self.makeIndices(self.partial_sequences, self.voc)
 
         self.size = len(self.ids)
         assert self.size == len(self.input_images) == len(self.partial_sequences) == len(self.next_words)
@@ -77,9 +76,9 @@ class Dataset:
     def arrayConvert(self):
         # print("Converting Arrays...")
 
-        self.input_images = np.arrays(self.input_images)
+        self.input_images = np.array(self.input_images)
         self.partial_sequences = np.array(self.partial_sequences)
-        self.next_words = np.arrays(self.next_words)
+        self.next_words = np.array(self.next_words)
 
     def append(self,sample_id, gui, img, to_show = False):
         if to_show:
@@ -89,7 +88,7 @@ class Dataset:
 
         token_sequence = [START_TOKEN]
         for line in gui:
-            line = line.replace(",",", ").replace("\n"," \n")
+            line = line.replace(","," ,").replace("\n"," \n")
             tokens = line.split(" ")
             for token in tokens:
                 self.voc.addToken(token)
@@ -116,7 +115,7 @@ class Dataset:
             sparse_vector_seq = []
             for token in sequence:
                 sparse_vector_seq.append(voc.vocabulary[token])
-            temp.append(np.arrya(sparse_vector_seq))
+            temp.append(np.array(sparse_vector_seq))
         return temp
     
     @staticmethod
@@ -126,7 +125,7 @@ class Dataset:
             sparse_vector_seq = []
             for token in sequence:
                 sparse_vector_seq.append(voc.binary_vocabulary[token])
-            temp.append(np.arrya(sparse_vector_seq))
+            temp.append(np.array(sparse_vector_seq))
         return temp
     
     @staticmethod
