@@ -13,12 +13,12 @@ class Vocabulary:
         self.token_lookup = {}
         self.size = 0
 
-        self.addToken(START_TOKEN)
-        self.addToken(END_TOKEN)
-        self.addToken(PLACEHOLDER)
+        self.append(START_TOKEN)
+        self.append(END_TOKEN)
+        self.append(PLACEHOLDER)
 
 
-    def addToken(self, token):
+    def append(self, token):
         if token not in self.vocabulary:
             self.vocabulary[token] = self.size
             self.token_lookup[self.size] = token

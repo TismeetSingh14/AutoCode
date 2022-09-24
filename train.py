@@ -31,7 +31,6 @@ def run(input_path, output_path, memory_intensive, pretrained_model):
 
         voc = Vocabulary()
         voc.dataRead(output_path)
-
         generator = Generator.data_generator(voc,gui_paths,img_paths,BATCH_SIZE,True)
     
     model = AutoCode(input_shape,output_size,output_path)

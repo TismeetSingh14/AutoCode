@@ -17,7 +17,7 @@ class Generator:
             sample_in_batch_counter = 0
 
             for i in range(0,len(gui_path)):
-                if(img_paths[i].find(".png") != -1):
+                if img_paths[i].find(".png") != -1:
                     img = Utils.imgPreprocess(img_paths[i],IMAGE_SIZE)
                 else:
                     img = np.load(img_paths[i])["features"]
@@ -29,11 +29,11 @@ class Generator:
                     tokens = line.split(" ")
 
                     for token in tokens:
-                        voc.addToken(token)
+                        voc.append(token)
                         token_sequence.append(token)
                 token_sequence.append(END_TOKEN)
 
-                suffix =[PLACEHOLDER]*CONTEXT_LENGTH
+                suffix = [PLACEHOLDER] * CONTEXT_LENGTH
 
                 a = np.concatenate([suffix,token_sequence])
                 for j in range(0,len(a) - CONTEXT_LENGTH):
@@ -69,3 +69,4 @@ class Generator:
                         batch_input_images = []
                         batch_partial_sequences = []
                         batch_next_words = []
+                        sample_in_batch_counter = 0

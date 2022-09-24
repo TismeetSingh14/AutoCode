@@ -90,7 +90,7 @@ class Dataset:
             line = line.replace(","," ,").replace("\n"," \n")
             tokens = line.split(" ")
             for token in tokens:
-                self.voc.addToken(token)
+                self.voc.append(token)
                 token_sequence.append(token)
 
         token_sequence.append(END_TOKEN)
@@ -129,8 +129,10 @@ class Dataset:
     
     @staticmethod
     def makeSparseLabels(next_words,voc):
+        print("hello")
         temp = []
         for label in next_words:
+            # print(label)
             temp.append(voc.binary_vocabulary[label])
         return temp
     
