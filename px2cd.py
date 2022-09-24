@@ -8,30 +8,30 @@ from keras.optimizers import *
 from keras.optimizers import Adam
 from AModel import *
 
-class AutoCode():
+class AutoCode(AModel):
     def __init__(self, input_shape, output_size, path):
         AModel.__init__(self, input_shape, output_size, path)
         self.name = "Code-Automaton"
-    
+
         model_i = Sequential()
         model_i.add(Conv2D(32, (3,3), padding = "valid", activation="relu", input_shape = input_shape))
-        model_i.add(LeakyReLU(alpha=0.1))
+        # model_i.add(LeakyReLU(alpha=0.1))
         model_i.add(Conv2D(32, (3,3), padding = "valid", activation="relu"))
-        model_i.add(LeakyReLU(alpha=0.1))
+        # model_i.add(LeakyReLU(alpha=0.1))
         model_i.add(MaxPooling2D(pool_size = (2,2)))
         model_i.add(Dropout(0.3))
 
         model_i.add(Conv2D(64, (3,3), padding = "valid", activation="relu"))
-        model_i.add(LeakyReLU(alpha=0.1))
+        # model_i.add(LeakyReLU(alpha=0.1))
         model_i.add(Conv2D(64, (3,3), padding = "valid", activation="relu"))
-        model_i.add(LeakyReLU(alpha=0.1))
+        # model_i.add(LeakyReLU(alpha=0.1))
         model_i.add(MaxPooling2D(pool_size = (2,2)))
         model_i.add(Dropout(0.25))
 
         model_i.add(Conv2D(128, (3,3), padding = "valid", activation="relu"))
-        model_i.add(LeakyReLU(alpha=0.1))
+        # model_i.add(LeakyReLU(alpha=0.1))
         model_i.add(Conv2D(128, (3,3), padding = "valid", activation="relu"))
-        model_i.add(LeakyReLU(alpha=0.1))
+        # model_i.add(LeakyReLU(alpha=0.1))
         model_i.add(MaxPooling2D(pool_size = (2,2)))
         model_i.add(Dropout(0.3))
 
@@ -64,6 +64,7 @@ class AutoCode():
 
         optimizer = Adam(lr = 0.0001)
         self.model.compile(loss = "categorical_crossentropy", optimizer=optimizer)
+        print(self.model.summary())
     
     def fit(self, images, captions, next_words):
         self.model.fit([images, captions], next_words, shuffle = False, epochs = EPOCHS, batch_size=BATCH_SIZE,verbose = True)
