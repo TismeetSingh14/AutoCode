@@ -7,6 +7,7 @@ from keras import *
 from keras.optimizers import *
 from keras.optimizers import Adam
 from AModel import *
+from keras.utils import plot_model
 
 class AutoCode(AModel):
     def __init__(self, input_shape, output_size, path):
@@ -65,6 +66,7 @@ class AutoCode(AModel):
         optimizer = Adam(lr = 0.0001)
         self.model.compile(loss = "categorical_crossentropy", optimizer=optimizer)
         print(self.model.summary())
+        plot_model(self.model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
     
     def fit(self, images, captions, next_words):
         self.model.fit([images, captions], next_words, shuffle = False, epochs = EPOCHS, batch_size=BATCH_SIZE,verbose = True)
