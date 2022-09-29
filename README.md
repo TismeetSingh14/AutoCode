@@ -1,5 +1,4 @@
 # Auto Code Sequence Generator
-The following code is based on the following research paper : [research paper](https://arxiv.org/abs/1705.07962)
 
 ## Installation
 
@@ -30,12 +29,16 @@ cd model
 # usage: generate.py <trained weights path> <trained model name> <input image> <output path> <search method (default: greedy)>
 ./generate.py ../bin pix2code ../gui_screenshots ../code
 
-# equivalent to command above
+# equivalent to the command above
 ./generate.py ../bin pix2code ../gui_screenshots ../code greedy
 
 # generate DSL code with beam search and a beam width of size 3
 ./generate.py ../bin pix2code ../gui_screenshots ../code 3
 ```
+# Authors and acknowledgement
+- [Kartikeya Agarwal](https://github.com/kartikeya72001)
+- [Daksh Gupta](https://github.com/Daksh-404)
+
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
